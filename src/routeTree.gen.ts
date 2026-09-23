@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as ParentRouteImport } from './routes/parent'
 import { Route as ShortsRouteImport } from './routes/shorts'
@@ -18,6 +19,11 @@ import { Route as WatchIdRouteImport } from './routes/watch.$id'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LiveRoute = LiveRouteImport.update({
@@ -43,6 +49,7 @@ const WatchIdRoute = WatchIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/live': typeof LiveRoute
   '/parent': typeof ParentRoute
   '/shorts': typeof ShortsRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/live': typeof LiveRoute
   '/parent': typeof ParentRoute
   '/shorts': typeof ShortsRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/live': typeof LiveRoute
   '/parent': typeof ParentRoute
   '/shorts': typeof ShortsRoute
@@ -65,14 +74,16 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/live' | '/parent' | '/shorts' | '/watch/$id'
+  fullPaths: '/' | '/admin' | '/live' | '/parent' | '/shorts' | '/watch/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/live' | '/parent' | '/shorts' | '/watch/$id'
-  id: '__root__' | '/' | '/live' | '/parent' | '/shorts' | '/watch/$id'
+  to: '/' | '/admin' | '/live' | '/parent' | '/shorts' | '/watch/$id'
+  id:
+    '__root__' | '/' | '/admin' | '/live' | '/parent' | '/shorts' | '/watch/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   LiveRoute: typeof LiveRoute
   ParentRoute: typeof ParentRoute
   ShortsRoute: typeof ShortsRoute
@@ -86,6 +97,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/live': {
@@ -121,6 +139,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   LiveRoute: LiveRoute,
   ParentRoute: ParentRoute,
   ShortsRoute: ShortsRoute,
