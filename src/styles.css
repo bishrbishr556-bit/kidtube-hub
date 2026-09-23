@@ -156,5 +156,55 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-body);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+}
+
+@utility play-mesh {
+  background-color: var(--cream);
+  background-image:
+    radial-gradient(at 10% 15%, color-mix(in oklch, var(--brand) 22%, transparent) 0px, transparent 55%),
+    radial-gradient(at 90% 10%, color-mix(in oklch, var(--sun) 28%, transparent) 0px, transparent 52%),
+    radial-gradient(at 85% 90%, color-mix(in oklch, var(--sky) 22%, transparent) 0px, transparent 55%),
+    radial-gradient(at 12% 92%, color-mix(in oklch, var(--grape) 20%, transparent) 0px, transparent 55%);
+}
+
+@utility card-pop {
+  background-color: var(--card);
+  border-radius: var(--radius-3xl);
+  box-shadow: 0 10px 30px -12px color-mix(in oklch, var(--grape) 35%, transparent);
+  outline: 1px solid color-mix(in oklch, var(--foreground) 8%, transparent);
+}
+
+@utility btn-chunky {
+  border-radius: 9999px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  background-color: var(--brand);
+  color: var(--brand-foreground);
+  box-shadow: 0 5px 0 0 color-mix(in oklch, var(--brand) 70%, black);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+@utility btn-chunky-active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 0 color-mix(in oklch, var(--brand) 70%, black);
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
