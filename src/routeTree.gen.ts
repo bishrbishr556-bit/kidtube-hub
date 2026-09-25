@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
+import { Route as CategoryRouteImport } from './routes/category'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as ParentRouteImport } from './routes/parent'
 import { Route as ShortsRouteImport } from './routes/shorts'
@@ -24,6 +25,11 @@ const IndexRoute = IndexRouteImport.update({
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoryRoute = CategoryRouteImport.update({
+  id: '/category',
+  path: '/category',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LiveRoute = LiveRouteImport.update({
@@ -50,6 +56,7 @@ const WatchIdRoute = WatchIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/category': typeof CategoryRoute
   '/live': typeof LiveRoute
   '/parent': typeof ParentRoute
   '/shorts': typeof ShortsRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/category': typeof CategoryRoute
   '/live': typeof LiveRoute
   '/parent': typeof ParentRoute
   '/shorts': typeof ShortsRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/category': typeof CategoryRoute
   '/live': typeof LiveRoute
   '/parent': typeof ParentRoute
   '/shorts': typeof ShortsRoute
@@ -74,16 +83,38 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/live' | '/parent' | '/shorts' | '/watch/$id'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/category'
+    | '/live'
+    | '/parent'
+    | '/shorts'
+    | '/watch/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/admin' | '/live' | '/parent' | '/shorts' | '/watch/$id'
+  to:
+    | '/'
+    | '/admin'
+    | '/category'
+    | '/live'
+    | '/parent'
+    | '/shorts'
+    | '/watch/$id'
   id:
-    '__root__' | '/' | '/admin' | '/live' | '/parent' | '/shorts' | '/watch/$id'
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/category'
+    | '/live'
+    | '/parent'
+    | '/shorts'
+    | '/watch/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
+  CategoryRoute: typeof CategoryRoute
   LiveRoute: typeof LiveRoute
   ParentRoute: typeof ParentRoute
   ShortsRoute: typeof ShortsRoute
@@ -104,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/category': {
+      id: '/category'
+      path: '/category'
+      fullPath: '/category'
+      preLoaderRoute: typeof CategoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/live': {
@@ -140,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
+  CategoryRoute: CategoryRoute,
   LiveRoute: LiveRoute,
   ParentRoute: ParentRoute,
   ShortsRoute: ShortsRoute,

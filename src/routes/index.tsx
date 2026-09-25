@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Play } from "lucide-react";
 import { KidShell } from "@/components/KidShell";
 import { VideoCard } from "@/components/VideoCard";
-import { isAllowed, thumbOf, videosQuery, type Video } from "@/lib/kids";
+import { CATEGORIES, isAllowed, thumbOf, videosQuery, type Video } from "@/lib/kids";
 import { useParentSettings } from "@/hooks/useParentSettings";
 
 export const Route = createFileRoute("/")({
@@ -52,6 +52,25 @@ function Home() {
   return (
     <KidShell>
       <main className="mx-auto max-w-7xl px-5">
+        <div className="no-scrollbar -mx-5 mb-2 flex gap-3 overflow-x-auto px-5 pb-2">
+          <Link
+            to="/category"
+            search={{ cat: undefined }}
+            className="shrink-0 rounded-full bg-foreground px-5 py-2.5 text-sm font-bold text-background"
+          >
+            All
+          </Link>
+          {CATEGORIES.map((c) => (
+            <Link
+              key={c}
+              to="/category"
+              search={{ cat: c }}
+              className="shrink-0 rounded-full bg-card px-5 py-2.5 text-sm font-bold text-foreground/80 outline outline-foreground/10 transition-colors hover:bg-secondary"
+            >
+              {c}
+            </Link>
+          ))}
+        </div>
         {isLoading ? (
           <p className="py-20 text-center font-display text-xl text-muted-foreground">Loading…</p>
         ) : !featured ? (
