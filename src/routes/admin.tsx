@@ -44,20 +44,31 @@ function Admin() {
   const qc = useQueryClient();
   const { data } = useQuery(videosQuery);
   const [form, setForm] = useState(emptyForm);
+  const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState<string | null>(null);
 
   const add = useMutation({
     mutationFn: async () => {
+      if (!file && !form.youtube.trim()) throw new Error("Add a YouTube link or upload a video file.");
+      let video_path: string | null = null;
+      if (file) {
+        const ext = file.name.split(".").pop() || "mp4";
+        video_path = `${crypto.randomUUID()}.${ext}`;
+        const up = await supabase.storage.from("videos").upload(video_path, file, { contentType: file.type });
+        if (up.error) throw up.error;
+      }
       const { error } = await supabase.from("videos").insert({
         title: form.title.trim(),
-        youtube_id: parseYouTubeId(form.youtube),
+        youtube_id: file ? "" : parseYouTubeId(form.youtube),
+        video_path,
         kind: form.kind,
         category: form.category,
         age_range: form.age_range,
         duration: form.duration.trim() || null,
         thumbnail_url: form.thumbnail_url.trim() || null,
-      });
+      } as never);
       if (error) throw error;
+      setFile(null);
     },
     onSuccess: () => {
       setForm(emptyForm);
@@ -119,13 +130,22 @@ function Admin() {
                 className={field}
               />
             </div>
-            <div className="sm:col-span-2">
-              <label className={labelCls}>YouTube link or video ID</label>
+            <div>
+              <label className={labelCls}>YouTube link (online only)</label>
               <input
-                required
                 value={form.youtube}
+                disabled={!!file}
                 onChange={(e) => setForm({ ...form, youtube: e.target.value })}
                 placeholder="https://www.youtube.com/watch?v=..."
+                className={field}
+              />
+            </div>
+            <div>
+              <label className={labelCls}>Or upload video file (downloadable, max 50MB)</label>
+              <input
+                type="file"
+                accept="video/*"
+                onChange={(e) => setFile(e.target.files?.[0] ?? null)}
                 className={field}
               />
             </div>

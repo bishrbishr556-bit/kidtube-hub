@@ -4,6 +4,7 @@ export type Video = {
   id: string;
   title: string;
   youtube_id: string;
+  video_path?: string | null;
   kind: string;
   category: string;
   age_range: string;
@@ -36,9 +37,9 @@ export const KINDS = ["video", "short", "live", "cartoon"] as const;
 export const AGE_RANGES = ["2-4", "4-8", "8-12"] as const;
 
 export function thumbOf(v: Pick<Video, "thumbnail_url" | "youtube_id">) {
-  return v.thumbnail_url && v.thumbnail_url.trim().length > 0
-    ? v.thumbnail_url
-    : `https://img.youtube.com/vi/${v.youtube_id}/hqdefault.jpg`;
+  if (v.thumbnail_url && v.thumbnail_url.trim().length > 0) return v.thumbnail_url;
+  if (!v.youtube_id) return "https://placehold.co/480x360/ff8a65/ffffff?text=%E2%96%B6";
+  return `https://img.youtube.com/vi/${v.youtube_id}/hqdefault.jpg`;
 }
 
 export function parseYouTubeId(input: string) {

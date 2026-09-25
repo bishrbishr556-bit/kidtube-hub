@@ -1,11 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { Home, Clapperboard, Radio, Shield } from "lucide-react";
+import { Home, Clapperboard, Radio, Shield, Download } from "lucide-react";
 
 const navItems = [
   { to: "/", label: "Home", icon: Home },
   { to: "/shorts", label: "Shorts", icon: Clapperboard },
   { to: "/live", label: "Live", icon: Radio },
+  { to: "/downloads", label: "Saved", icon: Download },
   { to: "/parent", label: "Grown-ups", icon: Shield },
 ] as const;
 
