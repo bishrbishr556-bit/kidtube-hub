@@ -44,7 +44,7 @@ export function thumbOf(v: Pick<Video, "thumbnail_url" | "youtube_id">) {
 export function parseYouTubeId(input: string) {
   const s = input.trim();
   const m = s.match(/(?:v=|youtu\.be\/|embed\/|shorts\/|live\/)([A-Za-z0-9_-]{6,})/);
-  return m ? m[1] : s;
+  return m && m[1] ? m[1] : s;
 }
 
 export const videosQuery = {

@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Play } from "lucide-react";
 import { thumbOf, type Video } from "@/lib/kids";
 
-export function VideoCard({ video, wide = false }: { video: Video; wide?: boolean }) {
+export function VideoCard({ video, wide = false }: { video: Video; wide?: boolean | undefined }) {
   return (
     <Link
       to="/watch/$id"
