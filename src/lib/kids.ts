@@ -13,7 +13,25 @@ export type Video = {
   created_at: string;
 };
 
-export const CATEGORIES = ["Cartoons", "Shorts", "Live", "Learning", "Stories"] as const;
+export const CATEGORIES = [
+  "Cartoons",
+  "Shorts",
+  "Live",
+  "Learning",
+  "Stories",
+  "Announcements",
+  "Education",
+  "English",
+  "Gaming",
+  "Islamic",
+  "Islamic stories",
+  "Mathematics",
+  "Qawwali",
+  "Science",
+  "Technology",
+  "Tutorials",
+  "Vlog",
+] as const;
 export const KINDS = ["video", "short", "live", "cartoon"] as const;
 export const AGE_RANGES = ["2-4", "4-8", "8-12"] as const;
 
