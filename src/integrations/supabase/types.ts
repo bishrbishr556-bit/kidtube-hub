@@ -25,7 +25,8 @@ export type Database = {
           published: boolean
           thumbnail_url: string | null
           title: string
-          youtube_id: string
+          video_path: string | null
+          youtube_id: string | null
         }
         Insert: {
           age_range?: string
@@ -37,7 +38,8 @@ export type Database = {
           published?: boolean
           thumbnail_url?: string | null
           title: string
-          youtube_id: string
+          video_path?: string | null
+          youtube_id?: string | null
         }
         Update: {
           age_range?: string
@@ -49,7 +51,8 @@ export type Database = {
           published?: boolean
           thumbnail_url?: string | null
           title?: string
-          youtube_id?: string
+          video_path?: string | null
+          youtube_id?: string | null
         }
         Relationships: []
       }

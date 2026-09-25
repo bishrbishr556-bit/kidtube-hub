@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as CategoryRouteImport } from './routes/category'
+import { Route as DownloadsRouteImport } from './routes/downloads'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as ParentRouteImport } from './routes/parent'
 import { Route as ShortsRouteImport } from './routes/shorts'
@@ -30,6 +31,11 @@ const AdminRoute = AdminRouteImport.update({
 const CategoryRoute = CategoryRouteImport.update({
   id: '/category',
   path: '/category',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DownloadsRoute = DownloadsRouteImport.update({
+  id: '/downloads',
+  path: '/downloads',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LiveRoute = LiveRouteImport.update({
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/category': typeof CategoryRoute
+  '/downloads': typeof DownloadsRoute
   '/live': typeof LiveRoute
   '/parent': typeof ParentRoute
   '/shorts': typeof ShortsRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/category': typeof CategoryRoute
+  '/downloads': typeof DownloadsRoute
   '/live': typeof LiveRoute
   '/parent': typeof ParentRoute
   '/shorts': typeof ShortsRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/category': typeof CategoryRoute
+  '/downloads': typeof DownloadsRoute
   '/live': typeof LiveRoute
   '/parent': typeof ParentRoute
   '/shorts': typeof ShortsRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/category'
+    | '/downloads'
     | '/live'
     | '/parent'
     | '/shorts'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/category'
+    | '/downloads'
     | '/live'
     | '/parent'
     | '/shorts'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/category'
+    | '/downloads'
     | '/live'
     | '/parent'
     | '/shorts'
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   CategoryRoute: typeof CategoryRoute
+  DownloadsRoute: typeof DownloadsRoute
   LiveRoute: typeof LiveRoute
   ParentRoute: typeof ParentRoute
   ShortsRoute: typeof ShortsRoute
@@ -142,6 +155,13 @@ declare module '@tanstack/react-router' {
       path: '/category'
       fullPath: '/category'
       preLoaderRoute: typeof CategoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/downloads': {
+      id: '/downloads'
+      path: '/downloads'
+      fullPath: '/downloads'
+      preLoaderRoute: typeof DownloadsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/live': {
@@ -179,6 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   CategoryRoute: CategoryRoute,
+  DownloadsRoute: DownloadsRoute,
   LiveRoute: LiveRoute,
   ParentRoute: ParentRoute,
   ShortsRoute: ShortsRoute,
