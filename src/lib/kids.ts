@@ -125,3 +125,24 @@ export function addWatchMinutes(minutes: number) {
   log[k] = (log[k] ?? 0) + minutes;
   window.localStorage.setItem(WATCH_KEY, JSON.stringify(log));
 }
+
+/* ---------- Favorites (stored on this device) ---------- */
+
+const FAV_KEY = "playbox-favorites";
+
+export function getFavorites(): string[] {
+  if (typeof window === "undefined") return [];
+  try {
+    return JSON.parse(window.localStorage.getItem(FAV_KEY) ?? "[]") as string[];
+  } catch {
+    return [];
+  }
+}
+
+export function toggleFavorite(id: string): boolean {
+  const f = getFavorites();
+  const on = !f.includes(id);
+  const next = on ? [...f, id] : f.filter((x) => x !== id);
+  window.localStorage.setItem(FAV_KEY, JSON.stringify(next));
+  return on;
+}
