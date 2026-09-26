@@ -10,12 +10,16 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AccountRouteImport } from './routes/account'
 import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CategoryRouteImport } from './routes/category'
 import { Route as DownloadsRouteImport } from './routes/downloads'
+import { Route as FavoritesRouteImport } from './routes/favorites'
 import { Route as LiveRouteImport } from './routes/live'
 import { Route as ParentRouteImport } from './routes/parent'
 import { Route as ShortsRouteImport } from './routes/shorts'
+import { Route as VideosRouteImport } from './routes/videos'
 import { Route as WatchIdRouteImport } from './routes/watch.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,9 +27,19 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccountRoute = AccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CategoryRoute = CategoryRouteImport.update({
@@ -36,6 +50,11 @@ const CategoryRoute = CategoryRouteImport.update({
 const DownloadsRoute = DownloadsRouteImport.update({
   id: '/downloads',
   path: '/downloads',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FavoritesRoute = FavoritesRouteImport.update({
+  id: '/favorites',
+  path: '/favorites',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LiveRoute = LiveRouteImport.update({
@@ -53,6 +72,11 @@ const ShortsRoute = ShortsRouteImport.update({
   path: '/shorts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VideosRoute = VideosRouteImport.update({
+  id: '/videos',
+  path: '/videos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WatchIdRoute = WatchIdRouteImport.update({
   id: '/watch/$id',
   path: '/watch/$id',
@@ -61,76 +85,104 @@ const WatchIdRoute = WatchIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/account': typeof AccountRoute
   '/admin': typeof AdminRoute
+  '/auth': typeof AuthRoute
   '/category': typeof CategoryRoute
   '/downloads': typeof DownloadsRoute
+  '/favorites': typeof FavoritesRoute
   '/live': typeof LiveRoute
   '/parent': typeof ParentRoute
   '/shorts': typeof ShortsRoute
+  '/videos': typeof VideosRoute
   '/watch/$id': typeof WatchIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/account': typeof AccountRoute
   '/admin': typeof AdminRoute
+  '/auth': typeof AuthRoute
   '/category': typeof CategoryRoute
   '/downloads': typeof DownloadsRoute
+  '/favorites': typeof FavoritesRoute
   '/live': typeof LiveRoute
   '/parent': typeof ParentRoute
   '/shorts': typeof ShortsRoute
+  '/videos': typeof VideosRoute
   '/watch/$id': typeof WatchIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/account': typeof AccountRoute
   '/admin': typeof AdminRoute
+  '/auth': typeof AuthRoute
   '/category': typeof CategoryRoute
   '/downloads': typeof DownloadsRoute
+  '/favorites': typeof FavoritesRoute
   '/live': typeof LiveRoute
   '/parent': typeof ParentRoute
   '/shorts': typeof ShortsRoute
+  '/videos': typeof VideosRoute
   '/watch/$id': typeof WatchIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/account'
     | '/admin'
+    | '/auth'
     | '/category'
     | '/downloads'
+    | '/favorites'
     | '/live'
     | '/parent'
     | '/shorts'
+    | '/videos'
     | '/watch/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/account'
     | '/admin'
+    | '/auth'
     | '/category'
     | '/downloads'
+    | '/favorites'
     | '/live'
     | '/parent'
     | '/shorts'
+    | '/videos'
     | '/watch/$id'
   id:
     | '__root__'
     | '/'
+    | '/account'
     | '/admin'
+    | '/auth'
     | '/category'
     | '/downloads'
+    | '/favorites'
     | '/live'
     | '/parent'
     | '/shorts'
+    | '/videos'
     | '/watch/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AccountRoute: typeof AccountRoute
   AdminRoute: typeof AdminRoute
+  AuthRoute: typeof AuthRoute
   CategoryRoute: typeof CategoryRoute
   DownloadsRoute: typeof DownloadsRoute
+  FavoritesRoute: typeof FavoritesRoute
   LiveRoute: typeof LiveRoute
   ParentRoute: typeof ParentRoute
   ShortsRoute: typeof ShortsRoute
+  VideosRoute: typeof VideosRoute
   WatchIdRoute: typeof WatchIdRoute
 }
 
@@ -143,11 +195,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/account': {
+      id: '/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/category': {
@@ -162,6 +228,13 @@ declare module '@tanstack/react-router' {
       path: '/downloads'
       fullPath: '/downloads'
       preLoaderRoute: typeof DownloadsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/favorites': {
+      id: '/favorites'
+      path: '/favorites'
+      fullPath: '/favorites'
+      preLoaderRoute: typeof FavoritesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/live': {
@@ -185,6 +258,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShortsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/videos': {
+      id: '/videos'
+      path: '/videos'
+      fullPath: '/videos'
+      preLoaderRoute: typeof VideosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/watch/$id': {
       id: '/watch/$id'
       path: '/watch/$id'
@@ -197,12 +277,16 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AccountRoute: AccountRoute,
   AdminRoute: AdminRoute,
+  AuthRoute: AuthRoute,
   CategoryRoute: CategoryRoute,
   DownloadsRoute: DownloadsRoute,
+  FavoritesRoute: FavoritesRoute,
   LiveRoute: LiveRoute,
   ParentRoute: ParentRoute,
   ShortsRoute: ShortsRoute,
+  VideosRoute: VideosRoute,
   WatchIdRoute: WatchIdRoute,
 }
 export const routeTree = rootRouteImport

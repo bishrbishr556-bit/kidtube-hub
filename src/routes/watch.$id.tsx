@@ -1,12 +1,26 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { ArrowLeft, Download, Check } from "lucide-react";
+import { ArrowLeft, Download, Check, Heart } from "lucide-react";
 import { KidShell } from "@/components/KidShell";
 import { VideoCard } from "@/components/VideoCard";
-import { addWatchMinutes, isAllowed, videosQuery, type Video } from "@/lib/kids";
+import { addWatchMinutes, getFavorites, isAllowed, toggleFavorite, videosQuery, type Video } from "@/lib/kids";
 import { useParentSettings } from "@/hooks/useParentSettings";
 import { downloadVideo, fileUrl, getOffline } from "@/lib/offline";
+
+function FavButton({ id }: { id: string }) {
+  const [on, setOn] = useState(false);
+  useEffect(() => setOn(getFavorites().includes(id)), [id]);
+  return (
+    <button
+      onClick={() => setOn(toggleFavorite(id))}
+      aria-label={on ? "Remove from favorites" : "Add to favorites"}
+      className="inline-flex items-center gap-2 rounded-full bg-secondary px-4 py-3 text-sm font-bold"
+    >
+      <Heart className={`size-4 ${on ? "fill-brand text-brand" : ""}`} /> {on ? "Favorited" : "Favorite"}
+    </button>
+  );
+}
 
 function FilePlayer({ path }: { path: string }) {
   const [url, setUrl] = useState<string | null>(null);
@@ -121,12 +135,23 @@ function Watch() {
                     {video.duration ? ` · ${video.duration}` : ""}
                   </p>
                 </div>
+                <FavButton id={video.id} />
+              </div>
+              <div className="mx-2 mb-2 mt-2 flex flex-wrap items-center gap-3 rounded-2xl bg-secondary p-4">
+                <div className="min-w-0 flex-1">
+                  <p className="font-bold">Watch offline</p>
+                  <p className="text-xs font-bold text-muted-foreground">
+                    {video.video_path
+                      ? "Save this video to this device and play it later without internet (Downloads page)."
+                      : "YouTube doesn't allow its videos to be saved. Ask an admin to upload this video as a file to enable downloading."}
+                  </p>
+                </div>
                 {video.video_path ? (
                   <DownloadButton video={video} />
                 ) : (
-                  <span className="text-xs font-bold text-muted-foreground">
-                    YouTube videos can't be downloaded
-                  </span>
+                  <button disabled className="btn-chunky inline-flex items-center gap-2 px-5 py-3 opacity-50">
+                    <Download className="size-4" /> Download
+                  </button>
                 )}
               </div>
             </div>
