@@ -20,6 +20,7 @@ import { Route as LiveRouteImport } from './routes/live'
 import { Route as ParentRouteImport } from './routes/parent'
 import { Route as ShortsRouteImport } from './routes/shorts'
 import { Route as VideosRouteImport } from './routes/videos'
+import { Route as ChannelIdRouteImport } from './routes/channel.$id'
 import { Route as WatchIdRouteImport } from './routes/watch.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -77,6 +78,11 @@ const VideosRoute = VideosRouteImport.update({
   path: '/videos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChannelIdRoute = ChannelIdRouteImport.update({
+  id: '/channel/$id',
+  path: '/channel/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WatchIdRoute = WatchIdRouteImport.update({
   id: '/watch/$id',
   path: '/watch/$id',
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/parent': typeof ParentRoute
   '/shorts': typeof ShortsRoute
   '/videos': typeof VideosRoute
+  '/channel/$id': typeof ChannelIdRoute
   '/watch/$id': typeof WatchIdRoute
 }
 export interface FileRoutesByTo {
@@ -109,6 +116,7 @@ export interface FileRoutesByTo {
   '/parent': typeof ParentRoute
   '/shorts': typeof ShortsRoute
   '/videos': typeof VideosRoute
+  '/channel/$id': typeof ChannelIdRoute
   '/watch/$id': typeof WatchIdRoute
 }
 export interface FileRoutesById {
@@ -124,6 +132,7 @@ export interface FileRoutesById {
   '/parent': typeof ParentRoute
   '/shorts': typeof ShortsRoute
   '/videos': typeof VideosRoute
+  '/channel/$id': typeof ChannelIdRoute
   '/watch/$id': typeof WatchIdRoute
 }
 export interface FileRouteTypes {
@@ -140,6 +149,7 @@ export interface FileRouteTypes {
     | '/parent'
     | '/shorts'
     | '/videos'
+    | '/channel/$id'
     | '/watch/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
     | '/parent'
     | '/shorts'
     | '/videos'
+    | '/channel/$id'
     | '/watch/$id'
   id:
     | '__root__'
@@ -168,6 +179,7 @@ export interface FileRouteTypes {
     | '/parent'
     | '/shorts'
     | '/videos'
+    | '/channel/$id'
     | '/watch/$id'
   fileRoutesById: FileRoutesById
 }
@@ -183,6 +195,7 @@ export interface RootRouteChildren {
   ParentRoute: typeof ParentRoute
   ShortsRoute: typeof ShortsRoute
   VideosRoute: typeof VideosRoute
+  ChannelIdRoute: typeof ChannelIdRoute
   WatchIdRoute: typeof WatchIdRoute
 }
 
@@ -265,6 +278,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VideosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/channel/$id': {
+      id: '/channel/$id'
+      path: '/channel/$id'
+      fullPath: '/channel/$id'
+      preLoaderRoute: typeof ChannelIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/watch/$id': {
       id: '/watch/$id'
       path: '/watch/$id'
@@ -287,6 +307,7 @@ const rootRouteChildren: RootRouteChildren = {
   ParentRoute: ParentRoute,
   ShortsRoute: ShortsRoute,
   VideosRoute: VideosRoute,
+  ChannelIdRoute: ChannelIdRoute,
   WatchIdRoute: WatchIdRoute,
 }
 export const routeTree = rootRouteImport

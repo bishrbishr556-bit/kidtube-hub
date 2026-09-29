@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      channels: {
+        Row: {
+          id: string
+          name: string
+          channel_url: string
+          youtube_channel_id: string | null
+          thumbnail_url: string | null
+          description: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          channel_url: string
+          youtube_channel_id?: string | null
+          thumbnail_url?: string | null
+          description?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          channel_url?: string
+          youtube_channel_id?: string | null
+          thumbnail_url?: string | null
+          description?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
@@ -36,6 +66,7 @@ export type Database = {
         Row: {
           age_range: string
           category: string
+          channel_id: string | null
           created_at: string
           description: string | null
           duration: string | null
@@ -50,6 +81,7 @@ export type Database = {
         Insert: {
           age_range?: string
           category?: string
+          channel_id?: string | null
           created_at?: string
           description?: string | null
           duration?: string | null
@@ -64,6 +96,7 @@ export type Database = {
         Update: {
           age_range?: string
           category?: string
+          channel_id?: string | null
           created_at?: string
           description?: string | null
           duration?: string | null
@@ -75,7 +108,15 @@ export type Database = {
           video_path?: string | null
           youtube_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "videos_channel_id_fkey"
+            columns: ["channel_id"]
+            isOneToOne: false
+            referencedRelation: "channels"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {

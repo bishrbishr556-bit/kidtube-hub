@@ -12,6 +12,17 @@ export type Video = {
   thumbnail_url: string | null;
   published: boolean;
   created_at: string;
+  channel_id?: string | null;
+};
+
+export type Channel = {
+  id: string;
+  name: string;
+  channel_url: string;
+  youtube_channel_id: string | null;
+  thumbnail_url: string | null;
+  description: string | null;
+  created_at: string;
 };
 
 export const CATEGORIES = [
@@ -47,6 +58,39 @@ export function parseYouTubeId(input: string) {
   const m = s.match(/(?:v=|youtu\.be\/|embed\/|shorts\/|live\/)([A-Za-z0-9_-]{6,})/);
   return m && m[1] ? m[1] : s;
 }
+
+/** Extract a YouTube channel identifier from various URL formats:
+ *  https://www.youtube.com/@Handle
+ *  https://www.youtube.com/channel/UCxxxxxx
+ *  https://www.youtube.com/c/CustomName
+ *  https://www.youtube.com/user/Username
+ */
+export function parseYouTubeChannelId(input: string): string {
+  const s = input.trim();
+  // @Handle style
+  const handle = s.match(/youtube\.com\/(@[A-Za-z0-9_.-]+)/);
+  if (handle?.[1]) return handle[1];
+  // /channel/UCxxxxxx
+  const channelId = s.match(/youtube\.com\/channel\/([A-Za-z0-9_-]+)/);
+  if (channelId?.[1]) return channelId[1];
+  // /c/CustomName or /user/Username
+  const custom = s.match(/youtube\.com\/(?:c|user)\/([A-Za-z0-9_.-]+)/);
+  if (custom?.[1]) return custom[1];
+  // fallback: return the raw input (could be just a handle or ID typed directly)
+  return s;
+}
+
+export const channelsQuery = {
+  queryKey: ["channels"],
+  queryFn: async (): Promise<Channel[]> => {
+    const { data, error } = await supabase
+      .from("channels")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (error) throw error;
+    return (data ?? []) as Channel[];
+  },
+};
 
 export const videosQuery = {
   queryKey: ["videos"],
