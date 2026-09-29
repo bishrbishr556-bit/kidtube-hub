@@ -115,8 +115,20 @@ function Home() {
             />
             <Rail title="Shorts" videos={by((v) => v.kind === "short")} />
             <Rail title="Live now" videos={by((v) => v.kind === "live")} wide />
+            <Rail title="🕌 Islamic" videos={by((v) => v.category === "Islamic")} wide />
+            <Rail title="📖 Islamic Stories" videos={by((v) => v.category === "Islamic stories")} wide />
             <Rail title="Learning" videos={by((v) => v.category === "Learning")} wide />
+            <Rail title="Education" videos={by((v) => v.category === "Education")} wide />
             <Rail title="Stories" videos={by((v) => v.category === "Stories")} wide />
+            <Rail title="Mathematics" videos={by((v) => v.category === "Mathematics")} wide />
+            <Rail title="Science" videos={by((v) => v.category === "Science")} wide />
+            <Rail title="English" videos={by((v) => v.category === "English")} wide />
+            <Rail title="Technology" videos={by((v) => v.category === "Technology")} wide />
+            <Rail title="Tutorials" videos={by((v) => v.category === "Tutorials")} wide />
+            <Rail title="Gaming" videos={by((v) => v.category === "Gaming")} wide />
+            <Rail title="Vlog" videos={by((v) => v.category === "Vlog")} wide />
+            <Rail title="Qawwali" videos={by((v) => v.category === "Qawwali")} wide />
+            <Rail title="Announcements" videos={by((v) => v.category === "Announcements")} wide />
           </>
         )}
       </main>
