@@ -74,7 +74,7 @@ function Admin() {
         const up = await supabase.storage.from("videos").upload(video_path, file, { contentType: file.type });
         if (up.error) throw up.error;
       }
-      const { error } = await supabase.from("videos").insert({
+      const { error } = await (supabase as any).from("videos").insert({
         title: form.title.trim(),
         youtube_id: file ? "" : parseYouTubeId(form.youtube),
         video_path,
@@ -84,7 +84,7 @@ function Admin() {
         duration: form.duration.trim() || null,
         thumbnail_url: form.thumbnail_url.trim() || null,
         channel_id: form.channel_id || null,
-      } as never);
+      });
       if (error) throw error;
       setFile(null);
     },
@@ -120,13 +120,13 @@ function Admin() {
       if (!channelForm.name.trim()) throw new Error("Channel name is required.");
       if (!channelForm.channel_url.trim()) throw new Error("Channel URL is required.");
       const youtube_channel_id = parseYouTubeChannelId(channelForm.channel_url);
-      const { error } = await supabase.from("channels").insert({
+      const { error } = await (supabase as any).from("channels").insert({
         name: channelForm.name.trim(),
         channel_url: channelForm.channel_url.trim(),
         youtube_channel_id: youtube_channel_id || null,
         thumbnail_url: channelForm.thumbnail_url.trim() || null,
         description: channelForm.description.trim() || null,
-      } as never);
+      });
       if (error) throw error;
     },
     onSuccess: () => {
@@ -140,7 +140,7 @@ function Admin() {
   /* ── Delete channel ── */
   const removeChannel = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("channels").delete().eq("id", id);
+      const { error } = await (supabase as any).from("channels").delete().eq("id", id);
       if (error) throw error;
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["channels"] }),

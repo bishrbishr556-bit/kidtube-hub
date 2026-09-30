@@ -83,7 +83,7 @@ export function parseYouTubeChannelId(input: string): string {
 export const channelsQuery = {
   queryKey: ["channels"],
   queryFn: async (): Promise<Channel[]> => {
-    const { data, error } = await supabase
+    const { data, error } = await (supabase as any)
       .from("channels")
       .select("*")
       .order("created_at", { ascending: false });
